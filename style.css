@@ -1,0 +1,45 @@
+body{
+    padding-top: 100px;
+}
+.p{
+    width: max-content;
+    padding-bottom: 10px;
+}
+.marbot{
+    margin-bottom: 0;
+}
+.div{
+    width: 300px;
+    position: relative;
+}
+.center{
+    margin: auto;
+}
+.input{
+    width: 100%;
+    margin-bottom: 10px;
+}
+.save{
+    display: block;
+    width: 100px;
+    margin: 16px auto;
+}
+.divColors{
+    width: 80%;
+    display: wrap;
+}
+.flex{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.a{
+    position: absolute;
+    right: 0;
+    text-decoration: underline;
+}
+.p_right{
+    position: absolute;
+    left: 0;
+}
