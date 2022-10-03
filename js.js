@@ -1,27 +1,54 @@
+let Users = []
 class User {
-    constructor(email, password, name, surname, age){
+    constructor(email, password, name, surname, age) {
         this.email = email;
         this.password = password;
         this.Name = name;
         this.Surname = surname;
         this.age = age;
     }
+}
+function fnRegistraton() {
+    let email = document.querySelector('.email').value
+    let password = document.querySelector('.password').value
+    let name = document.querySelector('.name').value
+    let surname = document.querySelector('.surname').value
+    let age = document.querySelector('.age').value
 
-}
-function fnRegistraton(){
-    let user = new User(
-        document.querySelector('.email').value,
-        document.querySelector('.password').value,
-        document.querySelector('.name').value,
-        document.querySelector('.surname').value,
-        document.querySelector('.age').value
-    )
-    let newUser = JSON.stringify(user)
-    if(localStorage.getItem('Users')){
-        newUser += localStorage.getItem('Users')
+    if (email && password && name && surname && age) {
+        let newUser = new User(
+            email,
+            password,
+            name,
+            surname,
+            age
+        )
+        Users.push(newUser)
+        localStorage.setItem('Users', JSON.stringify(Users))
     }
-    localStorage.setItem('Users', newUser)
-    console.log(localStorage.getItem('Users'))
 }
-console.log(localStorage.getItem('Users'))
+
+
+function fnLogin() {
+    let checkUserInArr = JSON.parse(localStorage.getItem('Users'))
+    let email = document.querySelector('.loginEmail').value
+    let password = document.querySelector('.loginPassword').value
+
+    for (let i = 0; i <= checkUserInArr.length - 1; i++) {
+        if (email === checkUserInArr[i].email && password === checkUserInArr[i].password) {
+            document.location.href = './Home_page.html'
+            localStorage.setItem('currentUser', JSON.stringify(checkUserInArr[i]))
+        }
+    }
+}
+
+if(localStorage.getItem('currentUser')){
+    let homePageName = document.querySelector('.homePageName')
+    let homePageSurname = document.querySelector('.homePageSurname')
+    let homePageAge = document.querySelector('.homePageAge')
+    let homePageArr = JSON.parse(localStorage.getItem('currentUser'))
+    homePageName.textContent = homePageName.textContent + ': ' + homePageArr.Name
+    homePageSurname.textContent = homePageSurname.textContent + ': ' + homePageArr.Surname
+    homePageAge.textContent = homePageAge.textContent + ': ' + homePageArr.age
+}
 
