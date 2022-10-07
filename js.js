@@ -15,7 +15,8 @@ const validateEmail = (email) => {
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         );
 }
-
+let ageCheck = /^[1-9][0-9]$|^[1-9]$|^100$/
+let passwordCheck = /[A-Z]\S*/g
 function checkData(newUser) {
     if (!validateEmail(newUser.email)) {
         alert("Incorrect email!")
@@ -24,8 +25,14 @@ function checkData(newUser) {
         || newUser.password.length < 1 || newUser.age.length < 1) {
         alert('Complete all data!')
         return false;
+    } else if(!ageCheck.test(newUser.age)){
+        alert('Incorrect age')
+        return false;
+    } else if(!passwordCheck.test(newUser.password)) {
+        alert('Incorrect password')
+        return false;
     } else {
-        return true;
+        return true
     }
 }
 
@@ -108,7 +115,7 @@ function deleteAcc() {
 // //     localStorage.removeItem("currentUser")
 // // }
 
-if (localStorage.getItem('currentUser')) {
+if (localStorage.getItem('currentUser') && window.location.href == './Home_page.html') {
     let homePageName = document.querySelector('.homePageName')
     let homePageSurname = document.querySelector('.homePageSurname')
     let homePageAge = document.querySelector('.homePageAge')
