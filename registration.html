@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +8,7 @@
     <title>Registration</title>
     <link rel="stylesheet" href="./style.css">
 </head>
+
 <body>
     <p class="p center">Registration</p>
     <div class="div center">
@@ -20,6 +22,81 @@
         </div>
         <button class="save" onclick="fnRegistraton()">Sign up</button>
     </div>
-    <script src="./js.js"></script>
+    <script>
+        class User {
+            constructor(email, password, name, surname, age) {
+                this.email = email;
+                this.password = password;
+                this.Name = name;
+                this.Surname = surname;
+                this.age = age;
+            }
+        }
+
+        const validateEmail = (email) => {
+            return String(email)
+                .toLowerCase()
+                .match(
+                    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+                );
+        }
+        let ageCheck = /^[1-9][0-9]$|^[1-9]$|^100$/
+        let passwordCheck = /[A-Z]\S*/g
+
+        function checkData(newUser) {
+            if (!validateEmail(newUser.email)) {
+                alert("Incorrect email!")
+                return false;
+            } else if (newUser.Name.length < 1 || newUser.Surname.length < 1
+                || newUser.password.length < 1 || newUser.age.length < 1) {
+                alert('Complete all data!')
+                return false;
+            } else if (!ageCheck.test(newUser.age)) {
+                alert('Incorrect age')
+                return false;
+            } else if (!passwordCheck.test(newUser.password)) {
+                alert('Incorrect password')
+                return false;
+            } else {
+                return true
+            }
+        }
+
+        function fnRegistraton() {
+            let email = document.querySelector('.email').value
+            let password = document.querySelector('.password').value
+            let name = document.querySelector('.name').value
+            let surname = document.querySelector('.surname').value
+            let age = document.querySelector('.age').value
+            let newUser = new User(
+                email,
+                password,
+                name,
+                surname,
+                age
+            )
+            let Users = []
+            if (localStorage.getItem('Users')) {
+                Users = JSON.parse(localStorage.getItem('Users'))
+            }
+            let checkSimilarEmail = Users.filter(user => user.email == newUser.email)
+            if (checkData(newUser) && checkSimilarEmail.length < 1) {
+                Users.push(newUser)
+                localStorage.setItem('Users', JSON.stringify(Users))
+                window.location.replace('./index.html')
+            } else if (checkSimilarEmail.length > 0) {
+                alert('You are already registered')
+            }
+        }
+
+        if (localStorage.getItem("currentUser")) {
+            if (JSON.parse(localStorage.getItem("currentUser")).isRemember) {
+                window.location.replace('./Home_page.html')
+            } else {
+                localStorage.removeItem("currentUser")
+            }
+        }
+    </script>
 </body>
+
 </html>
