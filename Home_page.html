@@ -11,7 +11,7 @@
 
 <body>
     <p class="p center"><b>Home page</b></p>
-    <div class="div center">
+    <div class="div center flex1">
         <div>
             <p>Personal data</p>
             <p class="homePageName">Name</p>
@@ -23,18 +23,25 @@
             <button class="save" onclick="logOut()">Log out</button>
             <button class="save" onclick="deleteAcc()">Delete my account</button>
         </div>
-
     </div>
     <p class="p center"><b>Other users</b></p>
-    <table class="table center border">
+    <div class="div center">
+        <button class="save1 buttonSearch" onclick="searchUser()">Find user by name or surname</button>
+        <input type="text" class="save1 inputSearchUser" placeholder="enter name or surname">
+    </div>
+    <table class="users-list center">
         <tr>
-            <th class="border">email</th>
+            <th class="border">ID</th>
             <th class="border">Name</th>
             <th class="border">Surname</th>
+            <th class="border">email</th>
             <th class="border">age</th>
         </tr>
     </table>
+
+    </li>
     <script>
+        getOtherUsers()
         function logOut() {
             window.location.replace('./index.html')
             localStorage.removeItem('currentUser')
@@ -62,6 +69,71 @@
             homePageAge.textContent = homePageAge.textContent + ': ' + homePageArr.age
         } else {
             logOut()
+        }
+
+
+        function getOtherUsers() {
+            let users = JSON.parse(localStorage.getItem('Users'), function (key, value) {
+                if (key == 'password') return undefined;
+                return value
+            })
+            let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            let otherUsers = users.filter(user => user.email != currentUser.email);
+
+            let listElement = document.querySelector('.users-list')
+            otherUsers.forEach((element, index) => {
+                listElement.innerHTML += `
+                <tr>
+                    <td class="border">${index + 1}</td>
+                    <td class="border">${element.Name}</td>
+                    <td class="border">${element.Surname}</td>
+                    <td class="border">${element.email}</td>
+                    <td class="border">${element.age}</td>
+                </tr>`
+            });
+        }
+
+        function searchUser() {
+            let userSearch = document.querySelector('.inputSearchUser').value
+            let userSearchArr = userSearch.split(' ')
+            let users = JSON.parse(localStorage.getItem('Users'))
+            let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            let otherUsers = users.filter(user => user.email != currentUser.email);
+            if (userSearchArr.length == 1) {
+                for (let i = 0; i <= otherUsers.length - 1; i++) {
+                    if (userSearchArr[0] == otherUsers[i].Name || userSearchArr[0] == otherUsers[i].Surname) {
+                        function fnx(item) {
+                            let listElement = document.querySelector('.users-list')
+                            listElement.innerHTML = `
+                                <tr>
+                                    <th class="border">ID</th>
+                                    <th class="border">Name</th>
+                                    <th class="border">Surname</th>
+                                    <th class="border">email</th>
+                                    <th class="border">age</th>
+                                </tr>
+                                <tr>
+                                    <td class="border">${i}</td>
+                                    <td class="border">${item.Name}</td>
+                                    <td class="border">${item.Surname}</td>
+                                    <td class="border">${item.email}</td>
+                                    <td class="border">${item.age}</td>
+                                </tr>`
+                        }
+                        fnx(otherUsers[i])
+                    }
+                }
+            } else if (userSearchArr.length == 2) {
+                for (let i = 0; i <= otherUsers.length - 1; i++) {
+                    if (userSearchArr[0] == otherUsers[i].Name && userSearchArr[1] == otherUsers[i].Surname) {
+                        // fnx(otherUsers[i])
+                    } else if (userSearchArr[1] == otherUsers[i].Name && userSearchArr[2] == otherUsers[i].Surname) {
+                        // fnx(otherUsers[i])
+                    }
+                }
+            }
+
+
         }
     </script>
 </body>
