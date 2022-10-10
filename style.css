@@ -43,3 +43,13 @@ body{
     position: absolute;
     left: 0;
 }
+
+.table{
+    width: 70%;
+    height: auto;
+    border-collapse: collapse;
+}
+
+.border{
+    border: 3px solid black;
+}

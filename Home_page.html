@@ -10,14 +10,30 @@
 </head>
 
 <body>
-    <p class="p center">Home page</p>
+    <p class="p center"><b>Home page</b></p>
     <div class="div center">
-        <p class="homePageName">Name</p>
-        <p class="p homePageSurname">Surname</p>
-        <p class="p homePageAge">Age</p>
-        <button class="save" onclick="logOut()">Log out</button>
-        <button class="save" onclick="deleteAcc()">Delete my account</button>
+        <div>
+            <p>Personal data</p>
+            <p class="homePageName">Name</p>
+            <p class="homePageSurname">Surname</p>
+            <p class="homePageAge">Age</p>
+        </div>
+        <div>
+            <button class="save" onclick="">Edit profile</button>
+            <button class="save" onclick="logOut()">Log out</button>
+            <button class="save" onclick="deleteAcc()">Delete my account</button>
+        </div>
+
     </div>
+    <p class="p center"><b>Other users</b></p>
+    <table class="table center border">
+        <tr>
+            <th class="border">email</th>
+            <th class="border">Name</th>
+            <th class="border">Surname</th>
+            <th class="border">age</th>
+        </tr>
+    </table>
     <script>
         function logOut() {
             window.location.replace('./index.html')
